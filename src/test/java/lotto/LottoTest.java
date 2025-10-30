@@ -25,29 +25,27 @@ class LottoTest {
     // TODO: 추가 기능 구현에 따른 테스트 코드 작성
 
     @Test
-    void InputMoneyStringTest(){
-        LottoMachine lm = new LottoMachine();
-
-        String str = "뭐넣을까";
-        System.setIn(new ByteArrayInputStream(str.getBytes()));
-
-        assertThatThrownBy(lm::InputMoney)
-                .isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @Test
-    void InputMoneyValueTest(){
+    void inputMoneyValueTest(){
         LottoMachine lm = new LottoMachine();
 
         String str = "8000\n";
         System.setIn(new ByteArrayInputStream(str.getBytes()));
 
-        lm.InputMoney();
+        lm.inputMoney();
 
-        int result = lm.GetCount();
+        int result = lm.getCount();
 
         assertThat(result)
                 .isPositive()
                 .isEqualTo(8);
     }
+
+    //1-45사이를 제외한 숫자 개입시
+    @Test
+    void LottoConditionTest(){
+        assertThatThrownBy(() -> new Lotto(List.of(46, 2, 3, 4, 5, 6)))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+
 }

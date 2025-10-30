@@ -8,6 +8,7 @@ public class Lotto {
     public Lotto(List<Integer> numbers) {
         validate(numbers);
         findDuplicate(numbers);
+        chkConditions(numbers);
         this.numbers = numbers;
     }
 
@@ -25,7 +26,14 @@ public class Lotto {
         }
     }
 
-    public List<Integer> GetLotto(){
+    private void chkConditions(List<Integer> numbers){
+        for(int a : numbers){
+            if(a < 1 || a > 45)
+                throw new IllegalArgumentException("[ERROR] 로또 번호는 1부터 45 사이의 숫자여야 합니다.");
+        }
+    }
+
+    public List<Integer> getLotto(){
         return this.numbers;
     }
 }
