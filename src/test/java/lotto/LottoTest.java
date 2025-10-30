@@ -47,5 +47,20 @@ class LottoTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
+    @Test
+    void machineParameterTest(){
+        LottoMachine lm = new LottoMachine();
+
+        String str = "8000\n1,2,3,4,5,6\n7\n";
+        System.setIn(new ByteArrayInputStream(str.getBytes()));
+
+        lm.run();
+
+        assertThat(lm.getCount()).isEqualTo(8);
+        assertThat(lm.getGoalLotto().getLotto()).containsExactly(1, 2, 3, 4, 5, 6);
+        assertThat(lm.getBonusNum()).isEqualTo(7);
+    }
+
+
 
 }

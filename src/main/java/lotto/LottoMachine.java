@@ -10,6 +10,46 @@ public class LottoMachine
     private int bonusNum = -1;
     private Lotto goalLotto;
 
+    public void inputBounsNum(){
+        boolean tsk = true;
+        int num = -1;
+        List<Integer> temp = goalLotto.getLotto();
+
+        while(tsk){
+            String str = getInput("보너스 번호를 입력해 주세요.");
+
+            //파싱 검사
+            try{
+                num = convertNum(str);
+            }catch (NumberFormatException e){
+                System.out.println(e.getMessage());
+            }
+
+            //무결성 검사
+            try{
+                tsk = chkNumCondition(num);
+            }catch (IllegalArgumentException e){
+                System.out.println(e.getMessage());
+            }
+
+            if(tsk == false)
+                this.bonusNum = num;
+        }
+    }
+
+    private boolean chkNumCondition(int num){
+        if(num < 1 || num > 45)
+            throw new IllegalArgumentException("[ERROR] 로또 번호는 1부터 45 사이의 숫자여야 합니다.");
+
+        for(int a : goalLotto.getLotto()){
+            if(a == num)
+                throw new IllegalArgumentException("[ERROR] 중복된 번호는 입력 할 수 없습니다.");
+        }
+
+        return false;
+    }
+
+
     public void inputGoalNum(){
         boolean tsk = true;
 
@@ -32,6 +72,15 @@ public class LottoMachine
 
             if(goalLotto != null && goalLotto.getLotto().size() == 6)
                 tsk = false;
+        }
+    }
+
+    private int convertNum(String s){
+        try{
+            int res = Integer.parseInt(s);
+            return res;
+        }catch (NumberFormatException e){
+            throw new NumberFormatException("[ERROR] 입력에 정수 외 문자가 포함되어 있습니다.");
         }
     }
 
@@ -86,9 +135,18 @@ public class LottoMachine
         return this.count;
     }
 
+    public Lotto getGoalLotto() {
+        return goalLotto;
+    }
+
+    public int getBonusNum() {
+        return bonusNum;
+    }
+
     public void run(){
         inputMoney();
         inputGoalNum();
+        inputBounsNum();
     }
 
 }
