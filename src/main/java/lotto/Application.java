@@ -6,7 +6,7 @@ public class Application {
         LottoMachine lotMachine = new LottoMachine();
 
         //금액 입력
-        lotMachine.GetMoney();
+        lotMachine.InputMoney();
 
         //당첨번호 입력
         while(true){

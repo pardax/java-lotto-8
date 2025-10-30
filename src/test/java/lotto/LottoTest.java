@@ -3,9 +3,10 @@ package lotto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayInputStream;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 class LottoTest {
     @Test
@@ -22,4 +23,31 @@ class LottoTest {
     }
 
     // TODO: 추가 기능 구현에 따른 테스트 코드 작성
+
+    @Test
+    void InputMoneyStringTest(){
+        LottoMachine lm = new LottoMachine();
+
+        String str = "뭐넣을까";
+        System.setIn(new ByteArrayInputStream(str.getBytes()));
+
+        assertThatThrownBy(lm::InputMoney)
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void InputMoneyValueTest(){
+        LottoMachine lm = new LottoMachine();
+
+        String str = "8000\n";
+        System.setIn(new ByteArrayInputStream(str.getBytes()));
+
+        lm.InputMoney();
+
+        int result = lm.GetCount();
+
+        assertThat(result)
+                .isPositive()
+                .isEqualTo(8);
+    }
 }
