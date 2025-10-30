@@ -1,6 +1,7 @@
 package lotto;
 
 import camp.nextstep.edu.missionutils.Console;
+import camp.nextstep.edu.missionutils.Randoms;
 
 import java.util.*;
 
@@ -9,6 +10,30 @@ public class LottoMachine
     private int count = -1;
     private int bonusNum = -1;
     private Lotto goalLotto;
+
+    private List<Lotto> hasLotto;
+
+    public LottoMachine(){
+        hasLotto = new ArrayList<>();
+    }
+
+    public void buyLotto(){
+        for(int i = 0; i < count; i++){
+            List<Integer> temp = Randoms.pickUniqueNumbersInRange(1, 45, 6);
+            Lotto lot = new Lotto(temp);
+            hasLotto.add(lot);
+        }
+    }
+
+    public void printMyLottos(){
+        for(Lotto a : hasLotto){
+            System.out.println(a.getLotto());
+        }
+    }
+
+    public void getResult(){
+
+    }
 
     public void inputBounsNum(){
         boolean tsk = true;
@@ -145,6 +170,8 @@ public class LottoMachine
 
     public void run(){
         inputMoney();
+        buyLotto();
+        printMyLottos();
         inputGoalNum();
         inputBounsNum();
     }
