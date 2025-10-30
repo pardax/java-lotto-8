@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.io.ByteArrayInputStream;
 import java.util.List;
 
+
 import static org.assertj.core.api.Assertions.*;
 
 class LottoTest {
@@ -61,6 +62,32 @@ class LottoTest {
         assertThat(lm.getBonusNum()).isEqualTo(7);
     }
 
+    @Test
+    void findLottoMatch() {
+        LottoMachine lm = new LottoMachine();
 
+        lm.setGoalLotto(new Lotto(List.of(1, 2, 3, 4, 5, 6)));
+        lm.setBonusNum(7);
+
+        /*
+        */
+        assertThat(lm.findLottoMatch(new Lotto(List.of(1, 2, 3, 4, 5, 6))))
+                .isEqualTo(LottoPrize.FIRST);
+
+        assertThat(lm.findLottoMatch(new Lotto(List.of(1, 2, 3, 4, 5, 7))))
+                .isEqualTo(LottoPrize.SECOND);
+
+        assertThat(lm.findLottoMatch(new Lotto(List.of(1, 2, 3, 4, 5, 10))))
+                .isEqualTo(LottoPrize.THIRD);
+
+        assertThat(lm.findLottoMatch(new Lotto(List.of(1, 2, 3, 4, 9, 10))))
+                .isEqualTo(LottoPrize.FOURTH);
+
+        assertThat(lm.findLottoMatch(new Lotto(List.of(1, 2, 3, 20, 21, 22))))
+                .isEqualTo(LottoPrize.FIFTH);
+
+        assertThat(lm.findLottoMatch(new Lotto(List.of(10, 11, 12, 13, 14, 15))))
+                .isEqualTo(LottoPrize.NONE);
+    }
 
 }
